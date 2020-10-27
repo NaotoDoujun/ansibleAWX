@@ -1,0 +1,10 @@
+version: "3"
+services:
+  ansibleawx:
+    build: ansible/.
+    container_name: ansibleawx
+    volumes:
+      - ./ansible/roles:/roles
+    privileged: true
+    ports:
+      - 8081:80
