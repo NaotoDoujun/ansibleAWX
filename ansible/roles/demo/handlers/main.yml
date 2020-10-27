@@ -1,0 +1,7 @@
+---
+# handlers file for demo
+# サービスのリスタート
+- name: service_restart
+  service:
+    name: cron
+    state: restarted

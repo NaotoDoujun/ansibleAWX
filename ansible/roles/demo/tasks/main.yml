@@ -1,0 +1,9 @@
+---
+# tasks file for demo
+# 設定ファイルを配布する
+- name: copy_configfile
+  copy: src=/{{ playbook_dir }}/demo/files/{{ item }} dest=/
+  with_items:
+  - test.conf
+  - test2.conf
+  notify: service_restart
