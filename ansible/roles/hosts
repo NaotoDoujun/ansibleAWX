@@ -1,5 +1,0 @@
-[rpi]
-192.168.10.7:50022 ansible_ssh_user=pi
-
-[all:vars]
-ansible_ssh_pass=admin

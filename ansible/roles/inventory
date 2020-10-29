@@ -1,2 +1,6 @@
-[target]
-localhost
+[rpi]
+192.168.10.5:20022
+
+[all:vars]
+ansible_ssh_user=pi
+ansible_ssh_pass=raspberry
