@@ -4,7 +4,12 @@ services:
     build: ansible/.
     container_name: ansibleawx
     volumes:
-      - ./ansible/roles:/roles
+      - ./ansible/roles:/var/lib/awx/projects/roles
     privileged: true
     ports:
-      - 8081:80
+      - "8081:80"
+  raspi:
+    build: raspi/.
+    container_name: raspi
+    ports:
+      - "20022:22"
