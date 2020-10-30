@@ -4,7 +4,7 @@ services:
     build: ansible/.
     container_name: ansibleawx
     volumes:
-      - ./ansible/roles:/var/lib/awx/projects/roles
+      - ./ansible/projects:/var/lib/awx/projects:rw
     privileged: true
     ports:
       - "8081:80"

@@ -1,0 +1,5 @@
+---
+- name: deploy rpi
+  hosts: rpi
+  roles:
+    - role: demo
