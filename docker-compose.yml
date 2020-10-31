@@ -1,15 +1,28 @@
 version: "3"
 services:
   ansibleawx:
+    environment:
+      TZ: Asia/Tokyo
     build: ansible/.
     container_name: ansibleawx
     volumes:
       - ./ansible/projects:/var/lib/awx/projects:rw
     privileged: true
     ports:
-      - "8081:80"
+      - "2022:22"
+      - "8080:80"
+    networks:
+      default:
+        aliases:
+          - ansibleawx.local
   raspi:
+    environment:
+      TZ: Asia/Tokyo
     build: raspi/.
     container_name: raspi
     ports:
-      - "20022:22"
+      - "3022:22"
+    networks:
+      default:
+        aliases:
+          - raspi.local
