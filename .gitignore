@@ -1,2 +1,3 @@
 .DS_Store
-raspi/sshforward.sh
+ansible/projects/*
+!ansible/projects/rpi_test/
