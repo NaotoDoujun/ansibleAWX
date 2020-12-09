@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+ARG AWX_VERSION="15.0.1"
+
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get upgrade -y && apt-get clean all
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -y apt-transport-https wget gnupg python3 python3-pip python-dev tree libpq-dev sudo vim && apt-get clean all
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get install -y gnupg software-properties-common docker.io curl ansible sshpass && apt-get clean all
@@ -17,8 +19,8 @@ RUN sed -i 's/#host_key_checking = False/host_key_checking = False/' /etc/ansibl
 RUN sed -i 's/#GatewayPorts no/GatewayPorts yes/' /etc/ssh/sshd_config && \
   sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
 
-# clone awx
-RUN git clone --depth 50 https://github.com/ansible/awx.git
+# download and extract target version archive
+RUN wget -c https://github.com/ansible/awx/archive/${AWX_VERSION}.tar.gz -O - | tar -xz && mv awx-${AWX_VERSION} awx
 COPY run.sh /root/run.sh
 RUN chmod 755 /root/run.sh
 
