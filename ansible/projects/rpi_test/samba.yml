@@ -1,0 +1,12 @@
+---
+- name: setup samba
+  hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      apt:
+        name:
+          - samba
+          - smbclient
+          - samba-common-bin
+        force: yes
