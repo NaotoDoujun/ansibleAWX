@@ -14,7 +14,7 @@
     - name: Linux user setting for samba
       user:
         name: smbuser
-        password: "{{ 'raspberry' | password_hash('sha512') }}"
+        password: "{{ smbpasswd | password_hash('sha512') }}"
 
     - name: Make share dir
       file: path=/var/share state=directory owner=smbuser group=smbuser mode=0755
@@ -25,7 +25,7 @@
       changed_when: false
 
     - name: Add samba User
-      shell: echo -e raspberry | pdbedit -t -a smbuser
+      shell: echo -e {{ smbpasswd }} | pdbedit -t -a smbuser
       when: samba_user_list.stdout_lines.count("smbuser") < 1
 
     - name: Copy smb.conf and restart smbd
