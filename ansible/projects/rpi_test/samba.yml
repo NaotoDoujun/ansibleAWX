@@ -21,7 +21,6 @@
       shell: pdbedit -L | awk -F":" '{print $1}'
       register: samba_user_list
       changed_when: false
-      always_run: yes
 
     - name: Add samba user
       shell: echo -e "passwd\npasswd\n" | pdbedit -t -a smbuser
