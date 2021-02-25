@@ -25,7 +25,7 @@
       changed_when: false
 
     - name: Add samba User
-      shell: echo -e {{ smbpasswd }} | pdbedit -t -a smbuser
+      shell: "(echo {{ smbpasswd }}; echo {{ smbpasswd }}) | pdbedit -t -a smbuser"
       when: samba_user_list.stdout_lines.count("smbuser") < 1
 
     - name: Copy smb.conf and restart smbd
