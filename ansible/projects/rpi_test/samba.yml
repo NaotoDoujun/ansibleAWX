@@ -10,5 +10,17 @@
           - smbclient
           - samba-common-bin
         force: yes
+
     - name: make public dir
       file: path=/home/pi/samba/public state=directory owner=pi group=pi mode=0755
+
+    - name: creating pi samba user passwords
+      shell: "(echo {{ smbpasswd }}; echo {{ smbpasswd }}) | smbpasswd -s -a pi"
+      become: true
+
+    - name: copy_smb.conf and restart smbd service
+      copy: src=/{{ playbook_dir }}/roles/demo/files/{{ item }} dest=/etc/samba
+      with_items:
+        - smb.conf
+      become: true
+      notify: service_restart

@@ -3,5 +3,5 @@
 # サービスのリスタート
 - name: service_restart
   service:
-    name: cron
+    name: smbd
     state: restarted
