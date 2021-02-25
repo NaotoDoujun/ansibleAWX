@@ -10,3 +10,5 @@
           - smbclient
           - samba-common-bin
         force: yes
+    - name: make public dir
+      file: path=/home/pi/samba/public state=directory owner=pi group=pi mode=0755
