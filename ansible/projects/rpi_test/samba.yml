@@ -27,4 +27,7 @@
 
   handlers:
     - name: restart smbd
-      service: name=smbd state=restarted
+      service:
+        name: smbd
+        state: restarted
+      become: true
