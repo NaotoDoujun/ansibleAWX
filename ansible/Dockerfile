@@ -24,6 +24,10 @@ RUN wget -c https://github.com/ansible/awx/archive/${AWX_VERSION}.tar.gz -O - | 
 COPY run.sh /root/run.sh
 RUN chmod 755 /root/run.sh
 
+# CORS settings for local container image build
+RUN echo "MIDDLEWARE = ['corsheaders.middleware.CorsMiddleware'] + MIDDLEWARE" >> /awx/installer/roles/image_build/files/settings.py
+RUN echo "CORS_ORIGIN_ALLOW_ALL = True" >> /awx/installer/roles/image_build/files/settings.py
+
 # uncomment project data dir
 RUN sed -i 's/#project_data_dir=\/var\/lib\/awx\/projects/project_data_dir=\/var\/lib\/awx\/projects/' /awx/installer/inventory
 

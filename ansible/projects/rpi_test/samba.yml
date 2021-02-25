@@ -1,0 +1,43 @@
+---
+- name: Setup Samba
+  hosts: all
+  tasks:
+    - name: Install Packages
+      become: true
+      apt:
+        name:
+          - samba
+          - smbclient
+          - samba-common-bin
+        force: yes
+
+    - name: Linux user setting for samba
+      user:
+        name: smbuser
+        password: "{{ smbpasswd | password_hash('sha512', smbuser_salt) }}"
+
+    - name: Make share dir
+      file: path=/var/share state=directory owner=smbuser group=smbuser mode=0755
+
+    - name: Samba User List
+      shell: pdbedit -L | awk -F":" '{print $1}'
+      register: samba_user_list
+      changed_when: false
+
+    - name: Add samba User
+      shell: "(echo {{ smbpasswd }}; echo {{ smbpasswd }}) | pdbedit -t -a smbuser"
+      when: samba_user_list.stdout_lines.count("smbuser") < 1
+
+    - name: Copy smb.conf and Restart smbd
+      copy: src=/{{ playbook_dir }}/roles/demo/files/{{ item }} dest=/etc/samba
+      with_items:
+        - smb.conf
+      become: true
+      notify: restart smbd
+
+  handlers:
+    - name: restart smbd
+      service:
+        name: smbd
+        state: restarted
+      become: true
