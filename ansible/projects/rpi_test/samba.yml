@@ -14,7 +14,7 @@
     - name: Linux user setting for samba
       user:
         name: smbuser
-        password: "{{ smbpasswd | password_hash('sha512') }}"
+        password: "{{ smbpasswd | password_hash('sha512', smbpasswd_salt) }}"
 
     - name: Make share dir
       file: path=/var/share state=directory owner=smbuser group=smbuser mode=0755
