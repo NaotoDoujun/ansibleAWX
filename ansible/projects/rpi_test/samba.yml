@@ -23,4 +23,8 @@
       with_items:
         - smb.conf
       become: true
-      notify: service_restart
+      notify: restart smbd
+
+  handlers:
+    - name: restart smbd
+      service: name=smbd state=restarted
